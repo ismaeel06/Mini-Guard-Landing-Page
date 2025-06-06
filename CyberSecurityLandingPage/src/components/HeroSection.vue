@@ -1,16 +1,14 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import ShieldIcon from '../assets/icons/ShieldIcon.vue'
 
-// Refs
-const parallaxContainer = ref<HTMLElement>()
+// Remove unused parallaxContainer
+// const parallaxContainer = ref<HTMLElement>()
 
-// Your Calendly Configuration
+// Calendly Configuration
 const CALENDLY_URL = 'https://calendly.com/miniguardtech-info/10min'
 
 // Methods
 const openCalendly = () => {
-  // Use same Calendly popup approach
+  // Use Calendly's popup widget if available
   if (window.Calendly) {
     window.Calendly.initPopupWidget({
       url: CALENDLY_URL,
@@ -20,7 +18,7 @@ const openCalendly = () => {
         name: 'Hero Section Visitor',
         email: '',
         customAnswers: {
-          a1: 'Hero CTA - Free Cyber Snapshot'
+          a1: 'Hero Section - Free Cybersecurity Consultation'
         }
       },
       utm: {
@@ -30,6 +28,7 @@ const openCalendly = () => {
       }
     })
   } else {
+    // Fallback: open in new tab
     window.open(CALENDLY_URL, '_blank')
   }
 }

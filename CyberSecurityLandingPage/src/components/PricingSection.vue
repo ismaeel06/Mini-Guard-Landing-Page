@@ -3,12 +3,10 @@ import { ref } from 'vue'
 // Import Heroicons
 import { 
   CloudArrowUpIcon,
-  EnvelopeIcon, 
   WifiIcon,
   ComputerDesktopIcon,
   CommandLineIcon,
   ShieldCheckIcon,
-  LockClosedIcon
 } from '@heroicons/vue/24/solid'
 
 // Your Calendly Configuration
