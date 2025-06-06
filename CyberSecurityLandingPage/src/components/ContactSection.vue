@@ -229,38 +229,27 @@ const downloadGuide = () => {
 
 const submitForm = async () => {
   isSubmitting.value = true
-  
+
+  const googleFormUrl = 'https://docs.google.com/forms/d/e/1FAIpQLScyX6lkYQzzqKpRmC-zD1lcOV7O6PUzlz3YXJWqai3R-c8_Ow/formResponse'
+
+  const formData = new FormData()
+  formData.append('entry.420612060', form.value.firstName) // First Name
+  formData.append('entry.2075823586', form.value.lastName) // Last Name
+  formData.append('entry.877119138', form.value.email)     // Email
+  formData.append('entry.246506156', form.value.phone)     // Phone
+  formData.append('entry.1508601139', form.value.company)  // Company
+  formData.append('entry.1773674609', form.value.message)  // Message
+
   try {
-    // Submit to Pepoform (replace with your actual Pepoform endpoint)
-    const response = await fetch('https://pepoform.com/api/form/submit', {
+    await fetch(googleFormUrl, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        form_id: 'your-pepoform-id', // Replace with your actual Pepoform ID
-        ...form.value
-      })
+      mode: 'no-cors', // Important for Google Forms
+      body: formData,
     })
-    
-    if (response.ok) {
-      emit('form-submitted', true)
-      // Reset form
-      form.value = {
-        firstName: '',
-        lastName: '',
-        email: '',
-        phone: '',
-        company: '',
-        message: ''
-      }
-    } else {
-      throw new Error('Form submission failed')
-    }
-  } catch (error) {
-    console.error('Form submission error:', error)
-    // For demo purposes, emit success anyway
-    emit('form-submitted', true)
+
+    emit('form-submitted', true) // optional
+
+    // Reset form
     form.value = {
       firstName: '',
       lastName: '',
@@ -269,6 +258,9 @@ const submitForm = async () => {
       company: '',
       message: ''
     }
+  } catch (error) {
+    console.error('Form submission error:', error)
+    emit('form-submitted', false) // optional
   } finally {
     isSubmitting.value = false
   }
