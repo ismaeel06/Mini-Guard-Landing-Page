@@ -1,5 +1,11 @@
 <script setup lang="ts">
 import ShieldIcon from '../assets/icons/ShieldIcon.vue';
+const scrollToTop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  })
+}
 </script>
 
 <template>
@@ -13,6 +19,10 @@ import ShieldIcon from '../assets/icons/ShieldIcon.vue';
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 lg:gap-12 mb-8 sm:mb-10 lg:mb-12">
         <!-- Company Info -->
         <div class="sm:col-span-2 lg:col-span-2">
+          <button 
+        @click="scrollToTop"
+        class="flex items-center space-x-2 sm:space-x-3 magnetic-element group hover:scale-105 transition-all duration-300 rounded-lg p-1"
+      >
           <div class="flex items-center space-x-3 mb-4 sm:mb-6 group">
             <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-lg sm:rounded-xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg flex-shrink-0">
               <ShieldIcon class="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 text-slate-900 group-hover:scale-110 transition-transform duration-300" />
@@ -21,6 +31,7 @@ import ShieldIcon from '../assets/icons/ShieldIcon.vue';
               MiniGuard<span class="text-yellow-400">Tech</span>
             </span>
           </div>
+          </button>
           <p class="text-slate-300 mb-4 sm:mb-6 max-w-md leading-relaxed text-sm sm:text-base">
             Cybersecurity made simple for small business. We protect what matters most to you with expert support you can actually understand.
           </p>

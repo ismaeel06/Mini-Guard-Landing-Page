@@ -15,7 +15,7 @@
           Our Core Services
         </h2>
         <p class="text-base sm:text-lg md:text-xl lg:text-2xl text-slate-300 max-w-3xl mx-auto leading-relaxed px-2 sm:px-0">
-          Comprehensive cybersecurity solutions tailored for small businesses
+          Comprehensive Cybersecurity Solutions Tailored For Small Businesses
         </p>
       </div>
 

@@ -91,7 +91,6 @@ const emit = defineEmits(['close'])
 
 // Company phone number
 const phoneNumber = '4433193515'
-const formattedPhone = '(443) 319-3515'
 
 // Create tel: href for dialer
 const phoneHref = computed(() => `tel:+1${phoneNumber}`)

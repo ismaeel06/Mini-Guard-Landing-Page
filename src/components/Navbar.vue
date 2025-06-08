@@ -14,6 +14,15 @@ const toggleMobileMenu = () => {
 const closeMobileMenu = () => {
   mobileMenuOpen.value = false
 }
+// Scroll to top function
+const scrollToTop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  })
+  // Close mobile menu if open
+  closeMobileMenu()
+}
 </script>
 
 <template>
@@ -21,7 +30,11 @@ const closeMobileMenu = () => {
   <header class="fixed top-0 w-full bg-slate-900/95 backdrop-blur-sm z-50 border-b border-slate-800">
     <nav class="container mx-auto px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center">
       <!-- Logo -->
-      <div class="flex items-center space-x-2 sm:space-x-3 magnetic-element">
+       <button 
+        @click="scrollToTop"
+        class="flex items-center space-x-2 sm:space-x-3 magnetic-element group hover:scale-105 transition-all duration-300 rounded-lg p-1"
+      >
+      <div  class="flex items-center space-x-2 sm:space-x-3 magnetic-element">
         <div class="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-lg flex items-center justify-center animate-scale-pulse">
           <ShieldIcon class="w-5 h-5 sm:w-6 sm:h-6 text-slate-900" />
         </div>
@@ -29,6 +42,7 @@ const closeMobileMenu = () => {
           MiniGuard<span class="text-yellow-400">Tech</span>
         </span>
       </div>
+      </button>
 
       <!-- Desktop Navigation -->
       <div class="hidden md:flex space-x-6 lg:space-x-8">
