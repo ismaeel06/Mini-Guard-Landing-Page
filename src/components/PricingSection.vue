@@ -3,17 +3,131 @@ import { ref } from 'vue'
 // Import Heroicons
 import { 
   CloudArrowUpIcon,
-  WifiIcon,
   ComputerDesktopIcon,
-  CommandLineIcon,
   ShieldCheckIcon,
+  ClockIcon,
+  HomeIcon
 } from '@heroicons/vue/24/solid'
 
 // Your Calendly Configuration
 const CALENDLY_URL = 'https://calendly.com/miniguardtech-info/10min'
 
-// Main pricing plans
-const pricingPlans = ref([
+// Updated Monthly Cybersecurity Plans
+const monthlyPlans = ref([
+  {
+    name: 'Basic Plan',
+    price: '300',
+    period: '/mo',
+    popular: false,
+    badge: 'Basic Protection',
+    features: [
+      'Initial Snapshot Security Check (one-time)',
+      'Monthly System Health Check (hardware, software, network)',
+      '1 Hour of Remote Support per Month',
+      'On-call Security & IT Advice',
+      'Simple Malware & Antivirus Monitoring',
+      'Perfect for small teams getting started'
+    ]
+  },
+  {
+    name: 'Standard Plan',
+    price: '500',
+    period: '/mo',
+    popular: true,
+    badge: 'Most Popular',
+    features: [
+      'Everything in Basic, plus:',
+      'Monthly Phishing Simulation Test & Employee Report',
+      'Patch Management & Software Updates',
+      'Secure Data Backup Monitoring',
+      'Up to 3 Hours of Remote Support per Month',
+      'Login & Access Monitoring for Key Devices'
+    ]
+  },
+  {
+    name: 'Premium Plan',
+    price: '750',
+    period: '/mo',
+    popular: false,
+    badge: 'Complete Protection',
+    features: [
+      'Everything in Standard, plus:',
+      'Priority Response Times',
+      'Unlimited Remote Support (within fair use)',
+      '1 On-site Visit per Month (locally)',
+      'Employee Cybersecurity Training (quarterly)',
+      'Quarterly Network Scan & Report',
+      'Proactive IT Infrastructure Planning'
+    ]
+  }
+])
+
+// Optional Add-Ons with updated pricing
+const optionalAddons = ref([
+  {
+    name: 'Additional On-Site Visits',
+    price: '150',
+    priceNote: 'per visit',
+    icon: HomeIcon,
+    features: [
+      'Professional on-site technical support',
+      'Hardware troubleshooting & setup',
+      'Network configuration assistance',
+      'Local consultation & training'
+    ]
+  },
+  {
+    name: 'Emergency After-Hours Support',
+    price: '100',
+    priceNote: '/hour',
+    icon: ClockIcon,
+    features: [
+      '24/7 emergency response availability',
+      'Critical system recovery support',
+      'Urgent security incident response',
+      'Priority escalation handling'
+    ]
+  },
+  {
+    name: 'New Device Setup',
+    price: '50',
+    priceNote: '/device',
+    icon: ComputerDesktopIcon,
+    features: [
+      'Complete device configuration',
+      'Security software installation',
+      'Network integration & testing',
+      'User training & documentation'
+    ]
+  },
+  {
+    name: 'Email Migration or Cleanup',
+    price: '200',
+    priceNote: 'starting at',
+    icon: ShieldCheckIcon,
+    features: [
+      'Complete email system migration',
+      'Data cleanup & organization',
+      'Security configuration setup',
+      'User training on new systems'
+    ]
+  },
+  {
+    name: 'Google Workspace/Microsoft 365 Setup',
+    price: '250',
+    priceNote: 'one-time',
+    icon: CloudArrowUpIcon,
+    features: [
+      'Professional cloud suite setup',
+      'User account configuration',
+      'Security & compliance settings',
+      'Integration with existing systems'
+    ]
+  }
+])
+
+// Legacy services (keeping for existing customers)
+const legacyServices = ref([
   {
     name: 'Free Security Snapshot',
     price: '0',
@@ -41,77 +155,25 @@ const pricingPlans = ref([
       'Perfect for first-time clients',
       'One-off system review'
     ]
-  },
-  {
-    name: 'Monthly Health Plan',
-    price: '197',
-    period: '/mo',
-    popular: true,
-    features: [
-      'Monthly system review & patches',
-      'Security & performance health check',
-      '1 remote support session/month',
-      'Monthly snapshot report',
-      'Consistent peace-of-mind support',
-      'Ongoing relationship & monitoring'
-    ]
-  }
-])
-
-// Premium add-on services with Heroicons
-const premiumAddons = ref([
-  {
-    name: 'Cloud Backup Setup',
-    price: '197',
-    icon: CloudArrowUpIcon,
-    features: [
-      'Secure cloud backup configuration',
-      'Automated scheduling setup',
-      'Data redundancy & fast recovery',
-      'Backup testing & verification'
-    ]
-  },
-  {
-    name: 'Email Setup + 2FA',
-    price: '147',
-    icon: ShieldCheckIcon,
-    features: [
-      'Professional email accounts',
-      'Multi-factor authentication setup',
-      'Enhanced security testing',
-      'Email security best practices'
-    ]
-  },
-  {
-    name: 'Network/Wi-Fi Optimization',
-    price: '147',
-    icon: WifiIcon,
-    features: [
-      'Secure Wi-Fi setup & passwords',
-      'Speed optimization & configuration',
-      'Prevent unauthorized access',
-      'Network security assessment'
-    ]
   }
 ])
 
 // Methods
 const openCalendly = () => {
-  // Only for Free Security Snapshot
   if (window.Calendly) {
     window.Calendly.initPopupWidget({
       url: CALENDLY_URL,
       parentElement: document.body,
       rootElement: document.body,
       prefill: {
-        name: 'Free Assessment Lead',
+        name: 'Monthly Plan Interest',
         email: '',
         customAnswers: {
-          a1: 'Free Security Snapshot'
+          a1: 'Monthly Cybersecurity Plan Inquiry'
         }
       },
       utm: {
-        utmCampaign: 'free-assessment',
+        utmCampaign: 'monthly-plans',
         utmSource: 'miniguardtech-site',
         utmMedium: 'web'
       }
@@ -122,12 +184,10 @@ const openCalendly = () => {
 }
 
 const handlePaidPlan = (planName: string) => {
-  // For paid plans, scroll to contact section or show a different action
   const contactSection = document.getElementById('contact')
   if (contactSection) {
     contactSection.scrollIntoView({ behavior: 'smooth' })
   }
-  // Or you could show a different modal, redirect to contact form, etc.
   console.log(`Interested in: ${planName}`)
 }
 </script>
@@ -142,51 +202,49 @@ const handlePaidPlan = (planName: string) => {
       <!-- Section Header -->
       <div class="text-center mb-12 sm:mb-16 lg:mb-20">
         <div class="inline-block mb-4 sm:mb-6">
-          <span class="text-yellow-400 font-semibold text-sm sm:text-base lg:text-lg tracking-wider uppercase">Pricing</span>
+          <span class="text-yellow-400 font-semibold text-sm sm:text-base lg:text-lg tracking-wider uppercase">Monthly Plans</span>
           <div class="h-1 w-12 sm:w-16 lg:w-20 bg-yellow-400 mx-auto mt-2"></div>
         </div>
         <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-4 sm:mb-6 text-white leading-tight">
-          Simple, Transparent Pricing
+          Monthly Cybersecurity Plans
         </h2>
-        <p class="text-base sm:text-lg md:text-xl lg:text-2xl text-slate-300 max-w-3xl mx-auto leading-relaxed px-2 sm:px-0">
-          Choose the protection level that's right for your business
+        <p class="text-base sm:text-lg md:text-xl lg:text-2xl text-slate-300 max-w-5xl mx-auto leading-relaxed px-2 sm:px-0 mb-6">
+          Our goal at MiniGuardTech is to provide premium cybersecurity and IT support to small businesses that need reliable, proactive protection without the cost of a full-time IT department. Choose from one of our three monthly packages, designed to scale with your needs.
         </p>
+        <div class="inline-flex items-center gap-2 bg-slate-700/50 px-4 py-2 rounded-full text-slate-300 text-sm">
+          <svg class="w-4 h-4 text-green-400" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9L10,17Z"/>
+          </svg>
+          <span>Choose the protection level that scales with your needs</span>
+        </div>
       </div>
 
-      <!-- Main Pricing Cards -->
+      <!-- Monthly Plans -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-7xl mx-auto mb-12 sm:mb-16 lg:mb-20">
         <div 
-          v-for="(plan, index) in pricingPlans" 
+          v-for="(plan, index) in monthlyPlans" 
           :key="index"
           class="group relative transition-all duration-300 hover:scale-105 hover:-translate-y-2"
           :class="{ 'md:col-span-2 lg:col-span-1 lg:scale-105': plan.popular }"
         >
-          <!-- Main Card with responsive height -->
+          <!-- Main Card -->
           <div 
-            class="relative bg-slate-900 rounded-2xl sm:rounded-3xl p-6 sm:p-8 border transition-all duration-300 hover:shadow-2xl min-h-[550px] sm:min-h-[600px] lg:min-h-[650px] flex flex-col"
+            class="relative bg-slate-900 rounded-2xl sm:rounded-3xl p-6 sm:p-8 border transition-all duration-300 hover:shadow-2xl min-h-[600px] sm:min-h-[650px] lg:min-h-[700px] flex flex-col"
             :class="plan.popular 
               ? 'border-yellow-400 hover:shadow-yellow-400/20' 
               : 'border-slate-700 hover:border-yellow-400 hover:shadow-yellow-400/10'"
           >
-            <!-- Gradient Background Overlay -->
-            <div 
-              class="absolute inset-0 rounded-2xl sm:rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-              :class="plan.popular 
-                ? 'bg-gradient-to-br from-yellow-400/5 to-transparent' 
-                : 'bg-gradient-to-br from-yellow-400/5 to-transparent'"
-            ></div>
-
-            <!-- Popular Badge -->
-            <div v-if="plan.popular" class="absolute -top-3 sm:-top-4 left-1/2 transform -translate-x-1/2 z-10">
-              <div class="bg-yellow-400 text-slate-900 px-4 sm:px-6 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wider shadow-lg">
-                Most Popular
-              </div>
-            </div>
-
-            <!-- Free Badge -->
-            <div v-if="plan.price === '0'" class="absolute -top-3 sm:-top-4 left-1/2 transform -translate-x-1/2 z-10">
-              <div class="bg-green-500 text-white px-4 sm:px-6 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wider shadow-lg">
-                Free Start
+            <!-- Badge -->
+            <div class="absolute -top-3 sm:-top-4 left-1/2 transform -translate-x-1/2 z-10">
+              <div 
+                class="px-1.5 sm:px-2 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wider shadow-lg"
+                :class="plan.popular 
+                  ? 'bg-yellow-400 text-slate-900' 
+                  : index === 0 
+                    ? 'bg-blue-500 text-white'
+                    : 'bg-purple-500 text-white'"
+              >
+                {{ plan.badge }}
               </div>
             </div>
 
@@ -198,18 +256,17 @@ const handlePaidPlan = (planName: string) => {
               
               <!-- Price Display -->
               <div class="mb-4 sm:mb-6">
-                <div v-if="plan.price !== '0'" class="text-xs sm:text-sm text-slate-400 mb-2 uppercase tracking-wider">Starting</div>
                 <div class="flex items-baseline justify-center">
-                  <span class="text-4xl sm:text-5xl md:text-6xl font-black text-yellow-400 group-hover:scale-110 transition-transform duration-300">
-                    <span v-if="plan.price === '0'">FREE</span>
-                    <span v-else>${{ plan.price }}</span>
+                  <span class="text-4xl sm:text-5xl md:text-6xl font-black text-yellow-400 group-hover:scale-107 transition-transform duration-300">
+                    ${{ plan.price }}
                   </span>
-                  <span v-if="plan.period" class="text-lg sm:text-xl text-slate-400 ml-2 font-medium group-hover:text-slate-300 transition-colors duration-300">{{ plan.period }}</span>
+                  <span class="text-lg sm:text-xl text-slate-400 ml-2 font-medium group-hover:text-slate-300 transition-colors duration-300">{{ plan.period }}</span>
                 </div>
+                <p class="text-xs sm:text-sm text-slate-400 mt-2 uppercase tracking-wider">Monthly Commitment</p>
               </div>
             </div>
             
-            <!-- Features List with flex-grow to fill space -->
+            <!-- Features List -->
             <ul class="space-y-3 sm:space-y-4 mb-6 sm:mb-8 flex-grow relative z-10">
               <li 
                 v-for="(feature, featureIndex) in plan.features" 
@@ -222,32 +279,29 @@ const handlePaidPlan = (planName: string) => {
                     <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                   </svg>
                 </div>
-                <span class="text-sm sm:text-base text-slate-200 leading-relaxed group-hover:text-white transition-colors duration-300">{{ feature }}</span>
+                <span 
+                  class="text-sm sm:text-base leading-relaxed group-hover:text-white transition-colors duration-300"
+                  :class="feature.startsWith('Everything in') ? 'text-yellow-400 font-semibold' : 'text-slate-200'"
+                >
+                  {{ feature }}
+                </span>
               </li>
             </ul>
 
-            <!-- CTA Button - always at bottom -->
+            <!-- CTA Button -->
             <div class="relative z-10 mt-auto">
               <button 
-                @click="plan.price === '0' ? openCalendly() : handlePaidPlan(plan.name)"
+                @click="handlePaidPlan(plan.name)"
                 class="w-full py-3 sm:py-4 rounded-xl sm:rounded-2xl font-bold text-sm sm:text-base lg:text-lg transition-all duration-300 transform group-hover:scale-105 hover:shadow-lg relative overflow-hidden"
                 :class="plan.popular 
                   ? 'bg-yellow-400 text-slate-900 hover:bg-yellow-500 hover:shadow-yellow-400/30' 
-                  : plan.price === '0'
-                    ? 'bg-green-500 text-white hover:bg-green-600 hover:shadow-green-500/30'
-                    : 'border-2 border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-slate-900 hover:shadow-yellow-400/30'"
+                  : 'border-2 border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-slate-900 hover:shadow-yellow-400/30'"
               >
-                <!-- Button shine effect -->
-                <div class="absolute inset-0 -top-2 -bottom-2 bg-gradient-to-r from-transparent via-white/20 to-transparent transform translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12"></div>
-                <span class="relative z-10">
-                  {{ plan.price === '0' ? 'Get Free Assessment' : 'Contact Us' }}
-                </span>
+                <span class="relative z-10">Get Started</span>
               </button>
               
-              <!-- Additional text for paid plans -->
-              <p v-if="plan.price !== '0'" class="text-slate-400 text-xs sm:text-sm text-center mt-2 sm:mt-3">
-                <span class="hidden sm:inline">Scroll down to contact us for this service</span>
-                <span class="sm:hidden">Contact us below</span>
+              <p class="text-slate-400 text-xs sm:text-sm text-center mt-2 sm:mt-3">
+                Contact us to discuss your needs
               </p>
             </div>
 
@@ -257,127 +311,187 @@ const handlePaidPlan = (planName: string) => {
         </div>
       </div>
 
-      <!-- Premium Add-Ons Section -->
+      <!-- Optional Add-Ons Section with Custom Layout -->
       <div class="mt-12 sm:mt-16 lg:mt-20 pt-12 sm:pt-16 lg:pt-20 border-t border-slate-700">
         <div class="text-center mb-10 sm:mb-12 lg:mb-16">
-          <h3 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4 text-white">Premium Add-On Services</h3>
-          <p class="text-base sm:text-lg lg:text-xl text-slate-300 px-2 sm:px-0">Enhance your security with specialized services</p>
+          <h3 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4 text-white">Optional Add-Ons</h3>
+          <p class="text-base sm:text-lg lg:text-xl text-slate-300 px-2 sm:px-0">Need more flexibility? Add any of these services to your monthly plan</p>
         </div>
         
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto">
-          <div 
-            v-for="(addon, index) in premiumAddons" 
-            :key="index"
-            class="group bg-slate-800 p-6 sm:p-8 rounded-xl sm:rounded-2xl border border-slate-700 hover:border-yellow-400 hover:scale-105 hover:-translate-y-2 transition-all duration-300 cursor-pointer"
-          >
-            <!-- Fixed height container with flex layout -->
-            <div class="min-h-[360px] sm:min-h-[400px] lg:min-h-[420px] flex flex-col">
-              <!-- Icon -->
-              <div class="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 bg-yellow-400 rounded-lg sm:rounded-xl flex items-center justify-center mx-auto mb-4 sm:mb-6 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 flex-shrink-0">
-                <component :is="addon.icon" class="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 text-slate-900"/>
+        <!-- Custom Grid Layout: 3 cards in first row, 2 cards centered in second row -->
+        <div class="max-w-7xl mx-auto">
+          <!-- First Row: 3 cards -->
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-6 sm:mb-8">
+            <div 
+              v-for="(addon, index) in optionalAddons.slice(0, 3)" 
+              :key="index"
+              class="group bg-slate-800 p-6 sm:p-8 rounded-xl sm:rounded-2xl border border-slate-700 hover:border-yellow-400 hover:scale-105 hover:-translate-y-2 transition-all duration-300 cursor-pointer"
+            >
+              <!-- Fixed height container -->
+              <div class="min-h-[360px] sm:min-h-[400px] lg:min-h-[420px] flex flex-col">
+                <!-- Icon -->
+                <div class="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 bg-yellow-400 rounded-lg sm:rounded-xl flex items-center justify-center mx-auto mb-4 sm:mb-6 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 flex-shrink-0">
+                  <component :is="addon.icon" class="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 text-slate-900"/>
+                </div>
+                
+                <!-- Content Header -->
+                <div class="text-center mb-4 sm:mb-6 flex-shrink-0">
+                  <h4 class="text-lg sm:text-xl lg:text-2xl font-bold text-white mb-2 sm:mb-3 group-hover:text-yellow-400 transition-colors duration-300 leading-tight">
+                    {{ addon.name }}
+                  </h4>
+                  <div class="text-yellow-400 font-bold">
+                    <span class="text-2xl sm:text-3xl">${{ addon.price }}</span>
+                    <span class="text-sm sm:text-base ml-1 text-slate-400">{{ addon.priceNote }}</span>
+                  </div>
+                </div>
+                
+                <!-- Features List -->
+                <ul class="text-slate-300 space-y-2 sm:space-y-3 flex-grow mb-4 sm:mb-6">
+                  <li v-for="feature in addon.features" :key="feature" class="flex items-start">
+                    <span class="text-yellow-400 mr-2 sm:mr-3 flex-shrink-0 mt-0.5">•</span>
+                    <span class="group-hover:text-slate-200 transition-colors duration-300 leading-relaxed text-sm sm:text-base">{{ feature }}</span>
+                  </li>
+                </ul>
+                
+                <!-- CTA Button -->
+                <div class="flex-shrink-0">
+                  <button 
+                    @click="handlePaidPlan(addon.name)"
+                    class="w-full py-2.5 sm:py-3 border-2 border-yellow-400 text-yellow-400 rounded-lg sm:rounded-xl font-semibold hover:bg-yellow-400 hover:text-slate-900 transition-all duration-300 transform hover:scale-105 text-sm sm:text-base"
+                  >
+                    Add to Plan
+                  </button>
+                </div>
               </div>
-              
-              <!-- Content Header -->
-              <div class="text-center mb-4 sm:mb-6 flex-shrink-0">
-                <h4 class="text-lg sm:text-xl lg:text-2xl font-bold text-white mb-2 sm:mb-3 group-hover:text-yellow-400 transition-colors duration-300 leading-tight">
-                  {{ addon.name }}
-                </h4>
-                <p class="text-yellow-400 font-bold text-2xl sm:text-3xl">${{ addon.price }}</p>
-              </div>
-              
-              <!-- Features List - takes remaining space -->
-              <ul class="text-slate-300 space-y-2 sm:space-y-3 flex-grow mb-4 sm:mb-6">
-                <li v-for="feature in addon.features" :key="feature" class="flex items-start">
-                  <span class="text-yellow-400 mr-2 sm:mr-3 flex-shrink-0 mt-0.5">•</span>
-                  <span class="group-hover:text-slate-200 transition-colors duration-300 leading-relaxed text-sm sm:text-base">{{ feature }}</span>
-                </li>
-              </ul>
-              
-              <!-- CTA Button - always at bottom -->
-              <div class="flex-shrink-0">
-                <button 
-                  @click="handlePaidPlan(addon.name)"
-                  class="w-full py-2.5 sm:py-3 border-2 border-yellow-400 text-yellow-400 rounded-lg sm:rounded-xl font-semibold hover:bg-yellow-400 hover:text-slate-900 transition-all duration-300 transform hover:scale-105 text-sm sm:text-base"
-                >
-                  Contact Us
-                </button>
+            </div>
+          </div>
+          
+          <!-- Second Row: 2 cards centered -->
+          <div class="flex justify-center">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 max-w-4xl">
+              <div 
+                v-for="(addon, index) in optionalAddons.slice(3, 5)" 
+                :key="index + 3"
+                class="group bg-slate-800 p-6 sm:p-8 rounded-xl sm:rounded-2xl border border-slate-700 hover:border-yellow-400 hover:scale-105 hover:-translate-y-2 transition-all duration-300 cursor-pointer"
+              >
+                <!-- Fixed height container -->
+                <div class="min-h-[360px] sm:min-h-[400px] lg:min-h-[420px] flex flex-col">
+                  <!-- Icon -->
+                  <div class="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 bg-yellow-400 rounded-lg sm:rounded-xl flex items-center justify-center mx-auto mb-4 sm:mb-6 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 flex-shrink-0">
+                    <component :is="addon.icon" class="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 text-slate-900"/>
+                  </div>
+                  
+                  <!-- Content Header -->
+                  <div class="text-center mb-4 sm:mb-6 flex-shrink-0">
+                    <h4 class="text-lg sm:text-xl lg:text-2xl font-bold text-white mb-2 sm:mb-3 group-hover:text-yellow-400 transition-colors duration-300 leading-tight">
+                      {{ addon.name }}
+                    </h4>
+                    <div class="text-yellow-400 font-bold">
+                      <span class="text-2xl sm:text-3xl">${{ addon.price }}</span>
+                      <span class="text-sm sm:text-base ml-1 text-slate-400">{{ addon.priceNote }}</span>
+                    </div>
+                  </div>
+                  
+                  <!-- Features List -->
+                  <ul class="text-slate-300 space-y-2 sm:space-y-3 flex-grow mb-4 sm:mb-6">
+                    <li v-for="feature in addon.features" :key="feature" class="flex items-start">
+                      <span class="text-yellow-400 mr-2 sm:mr-3 flex-shrink-0 mt-0.5">•</span>
+                      <span class="group-hover:text-slate-200 transition-colors duration-300 leading-relaxed text-sm sm:text-base">{{ feature }}</span>
+                    </li>
+                  </ul>
+                  
+                  <!-- CTA Button -->
+                  <div class="flex-shrink-0">
+                    <button 
+                      @click="handlePaidPlan(addon.name)"
+                      class="w-full py-2.5 sm:py-3 border-2 border-yellow-400 text-yellow-400 rounded-lg sm:rounded-xl font-semibold hover:bg-yellow-400 hover:text-slate-900 transition-all duration-300 transform hover:scale-105 text-sm sm:text-base"
+                    >
+                      Add to Plan
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Additional Services Section -->
+      <!-- Legacy Services Section (for existing customers) -->
       <div class="mt-12 sm:mt-16 lg:mt-20 pt-12 sm:pt-16 lg:pt-20 border-t border-slate-700">
         <div class="text-center mb-10 sm:mb-12 lg:mb-16">
-          <h3 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4 text-white">Additional Services</h3>
-          <p class="text-base sm:text-lg lg:text-xl text-slate-300 px-2 sm:px-0">Specialized solutions for unique needs</p>
+          <h3 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4 text-white">One-Time Services</h3>
+          <p class="text-base sm:text-lg lg:text-xl text-slate-300 px-2 sm:px-0">Perfect for getting started or one-off assessments</p>
         </div>
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 max-w-4xl mx-auto">
-          <!-- Remote Monitoring Card -->
-          <div class="bg-slate-800 p-6 sm:p-8 rounded-xl sm:rounded-2xl border border-slate-700 hover:border-yellow-400 transition-all duration-300">
-            <!-- Fixed height container with flex layout -->
-            <div class="min-h-[240px] sm:min-h-[260px] lg:min-h-[280px] flex flex-col">
-              <!-- Header -->
-              <div class="flex items-center mb-4 sm:mb-6 flex-shrink-0">
-                <div class="w-10 h-10 sm:w-12 sm:h-12 bg-blue-500 rounded-lg flex items-center justify-center mr-3 sm:mr-4">
-                  <ComputerDesktopIcon class="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+          <div 
+            v-for="(service, index) in legacyServices" 
+            :key="index"
+            class="group relative transition-all duration-300 hover:scale-105 hover:-translate-y-2"
+          >
+            <div 
+              class="relative bg-slate-900 rounded-2xl sm:rounded-3xl p-6 sm:p-8 border transition-all duration-300 hover:shadow-2xl min-h-[400px] flex flex-col"
+              :class="service.price === '0' 
+                ? 'border-green-500 hover:shadow-green-500/20' 
+                : 'border-slate-700 hover:border-yellow-400 hover:shadow-yellow-400/10'"
+            >
+              <!-- Free Badge -->
+              <div v-if="service.price === '0'" class="absolute -top-3 sm:-top-4 left-1/2 transform -translate-x-1/2 z-10">
+                <div class="bg-green-500 text-white px-4 sm:px-6 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wider shadow-lg">
+                  Free Start
                 </div>
-                <div>
-                  <h4 class="text-lg sm:text-xl font-bold text-white">Remote Monitoring</h4>
-                  <p class="text-yellow-400 font-bold text-sm sm:text-base">$25-$50/month per device</p>
+              </div>
+
+              <!-- Service Header -->
+              <div class="text-center mb-6 sm:mb-8 pt-3 sm:pt-4 relative z-10">
+                <h3 class="text-xl sm:text-2xl md:text-3xl font-black mb-3 sm:mb-4 uppercase tracking-wide text-white group-hover:text-yellow-400 transition-colors duration-300 leading-tight">
+                  {{ service.name }}
+                </h3>
+                
+                <div class="mb-4 sm:mb-6">
+                  <div class="flex items-baseline justify-center">
+                    <span class="text-4xl sm:text-5xl md:text-6xl font-black text-yellow-400 group-hover:scale-110 transition-transform duration-300">
+                      <span v-if="service.price === '0'">FREE</span>
+                      <span v-else>${{ service.price }}</span>
+                    </span>
+                  </div>
                 </div>
               </div>
               
-              <!-- Features List - takes remaining space -->
-              <ul class="text-slate-300 space-y-1.5 sm:space-y-2 flex-grow mb-4 sm:mb-6 text-sm sm:text-base">
-                <li>• 24/7 performance and security monitoring</li>
-                <li>• Alerts for suspicious activity or failures</li>
-                <li>• Priority response when issues detected</li>
-              </ul>
-              
-              <!-- CTA Button - always at bottom -->
-              <div class="flex-shrink-0">
-                <button 
-                  @click="handlePaidPlan('Remote Monitoring')"
-                  class="w-full py-2.5 sm:py-3 border border-blue-400 text-blue-400 rounded-lg font-semibold hover:bg-blue-400 hover:text-white transition-all duration-300 text-sm sm:text-base"
+              <!-- Features List -->
+              <ul class="space-y-3 sm:space-y-4 mb-6 sm:mb-8 flex-grow relative z-10">
+              <li 
+                v-for="(feature, featureIndex) in service.features" 
+                :key="feature" 
+                class="flex items-start opacity-90 group-hover:opacity-100 transition-all duration-300"
+                :style="{ transitionDelay: `${featureIndex * 50}ms` }"
+              >
+                <div class="flex-shrink-0 w-5 h-5 sm:w-6 sm:h-6 bg-green-500 rounded-full flex items-center justify-center mr-3 sm:mr-4 mt-0.5 group-hover:scale-110 transition-transform duration-300">
+                  <svg class="w-3 h-3 sm:w-4 sm:h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                  </svg>
+                </div>
+                <span 
+                  class="text-sm sm:text-base leading-relaxed group-hover:text-white transition-colors duration-300"
+                  :class="feature.startsWith('Everything in') ? 'text-yellow-400 font-semibold' : 'text-slate-200'"
                 >
-                  Contact Us
-                </button>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Linux Migration Card -->
-          <div class="bg-slate-800 p-6 sm:p-8 rounded-xl sm:rounded-2xl border border-slate-700 hover:border-yellow-400 transition-all duration-300">
-            <!-- Fixed height container with flex layout -->
-            <div class="min-h-[240px] sm:min-h-[260px] lg:min-h-[280px] flex flex-col">
-              <!-- Header -->
-              <div class="flex items-center mb-4 sm:mb-6 flex-shrink-0">
-                <div class="w-10 h-10 sm:w-12 sm:h-12 bg-purple-500 rounded-lg flex items-center justify-center mr-3 sm:mr-4">
-                  <CommandLineIcon class="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-                </div>
-                <div>
-                  <h4 class="text-lg sm:text-xl font-bold text-white">Linux Migration Package</h4>
-                  <p class="text-yellow-400 font-bold text-sm sm:text-base">$250-$950 per device</p>
-                </div>
-              </div>
-              
-              <!-- Features List - takes remaining space -->
-              <ul class="text-slate-300 space-y-1.5 sm:space-y-2 flex-grow mb-4 sm:mb-6 text-sm sm:text-base">
-                <li>• System compatibility assessment</li>
-                <li>• Data backup and OS migration</li>
-                <li>• Linux setup and user training</li>
-              </ul>
-              
-              <!-- CTA Button - always at bottom -->
-              <div class="flex-shrink-0">
+                  {{ feature }}
+                </span>
+              </li>
+            </ul>
+
+              <!-- CTA Button -->
+              <div class="relative z-10 mt-auto">
                 <button 
-                  @click="handlePaidPlan('Linux Migration Package')"
-                  class="w-full py-2.5 sm:py-3 border border-purple-400 text-purple-400 rounded-lg font-semibold hover:bg-purple-400 hover:text-white transition-all duration-300 text-sm sm:text-base"
+                  @click="service.price === '0' ? openCalendly() : handlePaidPlan(service.name)"
+                  class="w-full py-3 sm:py-4 rounded-xl sm:rounded-2xl font-bold text-sm sm:text-base lg:text-lg transition-all duration-300 transform group-hover:scale-105 hover:shadow-lg relative overflow-hidden"
+                  :class="service.price === '0'
+                    ? 'bg-green-500 text-white hover:bg-green-600 hover:shadow-green-500/30'
+                    : 'border-2 border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-slate-900 hover:shadow-yellow-400/30'"
                 >
-                  Contact Us
+                  <span class="relative z-10">
+                    {{ service.price === '0' ? 'Get Free Assessment' : 'Contact Us' }}
+                  </span>
                 </button>
               </div>
             </div>
@@ -388,11 +502,11 @@ const handlePaidPlan = (planName: string) => {
       <!-- Trust Indicators -->
       <div class="text-center mt-12 sm:mt-16">
         <div class="flex flex-col sm:flex-row items-center justify-center space-y-2 sm:space-y-0 sm:space-x-4 text-slate-400 text-xs sm:text-sm">
-          <span>💯 No contracts</span>
+          <span>💯 No long-term contracts</span>
           <span class="hidden sm:inline">•</span>
           <span>🛡️ 100% satisfaction guarantee</span>
           <span class="hidden sm:inline">•</span>
-          <span>📞 24/7 support</span>
+          <span>📞 Priority support included</span>
         </div>
       </div>
     </div>
